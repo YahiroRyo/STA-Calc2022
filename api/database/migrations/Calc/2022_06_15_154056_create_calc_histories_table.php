@@ -9,8 +9,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('calc_histories', function (Blueprint $table) {
-            $table->foreignId('user_id')->primary();
+            $table->id('calc_history_id');
 
+            $table->foreignId('user_id');
             $table->string('calc', 500);
 
             $table->timestamp('created_at')->useCurrent();

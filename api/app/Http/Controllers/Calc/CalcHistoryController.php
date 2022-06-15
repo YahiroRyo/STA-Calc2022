@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Calc\CalcHistoryRequest;
 use App\Models\Calc\Domain\CalcHistory as DomainCalcHistory;
 use App\Services\Calc\CalcHistoryService;
+use Illuminate\Database\Eloquent\Collection;
 
 class CalcHistoryController extends Controller
 {
@@ -15,5 +16,9 @@ class CalcHistoryController extends Controller
             auth()->id(),
             $request->calc,
         ));
+    }
+    public function findAll(): Collection
+    {
+        return CalcHistoryService::findAll();
     }
 }

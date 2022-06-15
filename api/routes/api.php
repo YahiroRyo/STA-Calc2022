@@ -23,6 +23,7 @@ Route::prefix('/users')->group(function() {
 });
 Route::prefix('/calc')->group(function() {
     Route::prefix('/histories')->group(function() {
+        Route::get('/', [CalcHistoryController::class, 'findAll']);
         Route::post('/', [CalcHistoryController::class, 'calcHistoryCreate']);
     });
 });
