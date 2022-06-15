@@ -1,5 +1,16 @@
-version: '3'
+version: '3.8'
 services:
+  calc-api:
+    build: ./api
+    container_name: calc-api
+    tty: true
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - 8080:80
+    depends_on:
+      - calc-db
+
   calc-client:
     build: ./client
     container_name: calc-client
@@ -23,3 +34,4 @@ services:
       MYSQL_PASSWORD: docker
       MYSQL_ROOT_PASSWORD: root
       TZ: "Asia/Tokyo"
+    command: "mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci"
