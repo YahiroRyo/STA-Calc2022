@@ -1,5 +1,16 @@
 version: '3'
 services:
+  calc-api:
+    build: ./api
+    container_name: calc-api
+    tty: true
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - 8080:80
+    depends_on:
+      - calc-db
+
   calc-client:
     build: ./client
     container_name: calc-client
