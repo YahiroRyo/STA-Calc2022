@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/users')->group(function() {
     Route::post('/', [UserController::class, 'createUser']);
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
