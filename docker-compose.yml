@@ -1,0 +1,25 @@
+version: '3'
+services:
+  calc-client:
+    build: ./client
+    container_name: calc-client
+    volumes:
+      - ./client:/home/client
+    tty: true
+    ports:
+      - 3000:3000
+      - 24678:24678
+
+  calc-db:
+    image: mysql:8.0
+    container_name: calc-db
+    volumes:
+      - ./database/mysql/mysql.conf:/etc/mysql/mysql.conf
+      - ./database/mysql/lib:/var/lib/mysql
+      - ./database/mysql/logs:/var/log/database
+    environment:
+      MYSQL_DATABASE: main
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
