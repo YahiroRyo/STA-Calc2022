@@ -7,7 +7,7 @@ use App\Models\User\Eloquent\User as EloquentUser;
 
 class UserService
 {
-    public static function createUser(DomainUser $user): void
+    public static function userCreate(DomainUser $user): void
     {
         EloquentUser::create($user->getUser());
     }

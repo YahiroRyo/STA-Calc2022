@@ -9,10 +9,10 @@ use App\Models\User\Domain\User as DomainUser;
 
 class UserController extends Controller
 {
-    public function createUser(UserCreateRequest $request)
+    public function userCreate(UserCreateRequest $request): void
     {
         $validated = $request->validated();
-        UserService::createUser(new DomainUser(
+        UserService::userCreate(new DomainUser(
             $validated['user_name'],
             $validated['password'],
         ));
