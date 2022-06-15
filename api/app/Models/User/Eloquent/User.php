@@ -12,6 +12,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public const UPDATED_AT = null;
+    public $primaryKey = 'user_id';
     protected $fillable = [
         'user_name',
         'password'
