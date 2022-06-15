@@ -4,6 +4,7 @@ services:
     build: ./api
     container_name: calc-api
     tty: true
+    command: "sh -c 'bash /var/www/html/bin/init.sh && apache2-foreground'"
     volumes:
       - ./api:/var/www/html
     ports:
@@ -14,6 +15,7 @@ services:
   calc-client:
     build: ./client
     container_name: calc-client
+    command: "sh -c 'yarn && yarn dev'"
     volumes:
       - ./client:/home/client
     tty: true
