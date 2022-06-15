@@ -10,12 +10,14 @@ class CalcHistory extends Model
     use HasFactory;
 
     public const UPDATED_AT = null;
-    public $primaryKey = 'user_id';
+    public $primaryKey = 'calc_history_id';
     protected $fillable = [
         'user_id',
         'calc'
     ];
     protected $hidden = [
+        'calc_history_id',
+        'user_id',
         'created_at'
     ];
 }
