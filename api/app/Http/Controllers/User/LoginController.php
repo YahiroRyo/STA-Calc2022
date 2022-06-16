@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function login(LoginRequest $request): void
     {
-        if (!auth()->attempt($request->validated()))
+        if (!auth()->attempt($request->validated(), true))
         {
             throw new UnauthorizedHttpException('');
         }
