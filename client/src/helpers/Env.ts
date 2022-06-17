@@ -8,7 +8,7 @@ type Env = {
 const envSetting = (): Env => {
     switch (location.hostname) {
         // prod
-        case '':
+        case 'calc.yappi.jp':
             return {
                 API_URL: PROD_API_URL
             };
