@@ -1,0 +1,22 @@
+.nav {
+    background-color: #333;
+    &__list {
+        align-items: center;
+        display: flex;
+        &__item {
+            list-style: none;
+            &__link {
+                background-color: #333;
+                color: #fdfdfd;
+                display: block;
+                font-size: 16px;
+                text-decoration: none;
+                padding: 20px 40px;
+                transition: .3s;
+                &:hover {
+                    background-color: #555;
+                }
+            }
+        }
+    }
+}
