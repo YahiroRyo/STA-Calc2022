@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "solid-app-router";
 import { createSignal, JSXElement, Show } from "solid-js";
+import env from "../../helpers/Env";
 import { UserCreateValidationError } from "../../types/error/users/UserCreateValidationError";
 import Alert from "../common/Alert";
 import Center from "../common/Center";
@@ -21,8 +22,8 @@ const Login = () => {
     const create = async (e: FormSubmitEvent) => {
         e.preventDefault();
         try {
-            await axios.get('http://localhost:8080/sanctum/csrf-cookie');
-            await axios.post('http://localhost:8080/users/create', {
+            await axios.get(`${env.API_URL}/sanctum/csrf-cookie`);
+            await axios.post(`${env.API_URL}/users/create`, {
                 user_name: userName(),
                 password: password(),
             });
