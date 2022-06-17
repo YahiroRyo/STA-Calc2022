@@ -56,7 +56,7 @@ const Login = () => {
             <div class={styles.formTemplate}>
                 <h1 class={styles.formTemplate__title}>Login / ログイン</h1>
                 <Show when={errorMessage()}>
-                    <Alert className={styles.formTemplate__alert} title="アカウントの作成に失敗しました" message={errorMessage()} />
+                    <Alert className={styles.formTemplate__alert} title="ログインに失敗しました" message={errorMessage()} />
                 </Show>
                 <form onSubmit={login} class={styles.formTemplate__form}>
                     <div class={styles.formTemplate__form__inputForm}>
