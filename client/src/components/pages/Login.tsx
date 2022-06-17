@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "solid-app-router";
 import { createSignal, JSXElement, Show } from "solid-js";
-import { LoginValidationError } from "../../types/error/login/LoginValidationError";
+import { LoginValidationError } from "../../types/error/users/LoginValidationError";
 import Alert from "../common/Alert";
 import Center from "../common/Center";
-import styles from "./Login.module.scss"
+import styles from "./FormTemplate.module.scss"
 
 type FormSubmitEvent = Event & {
     submitter: HTMLElement;
@@ -38,7 +38,6 @@ const Login = () => {
                         const data = e.response!.data as LoginValidationError;
                         setErrorMessage(
                             <span>
-                                <p>ログインに失敗しました</p>
                                 {data.errors.user_name ? <p>・{data.errors.user_name[0]}</p> : <></>}
                                 {data.errors.password ? <p>・{data.errors.password[0]}</p> : <></>}
                             </span>
@@ -54,21 +53,21 @@ const Login = () => {
 
     return (
         <Center>
-            <div class={styles.login}>
-                <h1 class={styles.login__title}>Login / ログイン</h1>
+            <div class={styles.formTemplate}>
+                <h1 class={styles.formTemplate__title}>Login / ログイン</h1>
                 <Show when={errorMessage()}>
-                    <Alert className={styles.login__alert} title="エラーが発生しました" message={errorMessage()} />
+                    <Alert className={styles.formTemplate__alert} title="アカウントの作成に失敗しました" message={errorMessage()} />
                 </Show>
-                <form onSubmit={login} class={styles.login__form}>
-                    <div class={styles.login__form__inputForm}>
-                        <label class={styles.login__form__inputForm__label} for="userName">ユーザー名</label>
-                        <input class={styles.login__form__inputForm__input} onInput={(e) => setUserName(e.currentTarget.value)} name="userName" id="userName" type="text" />
+                <form onSubmit={login} class={styles.formTemplate__form}>
+                    <div class={styles.formTemplate__form__inputForm}>
+                        <label class={styles.formTemplate__form__inputForm__label} for="userName">ユーザー名</label>
+                        <input class={styles.formTemplate__form__inputForm__input} onInput={(e) => setUserName(e.currentTarget.value)} name="userName" id="userName" type="text" />
                     </div>
-                    <div class={styles.login__form__inputForm}>
-                        <label class={styles.login__form__inputForm__label} for="password">パスワード</label>
-                        <input class={styles.login__form__inputForm__input} onInput={(e) => setPassword(e.currentTarget.value)} name="password" id="password" type="password" />
+                    <div class={styles.formTemplate__form__inputForm}>
+                        <label class={styles.formTemplate__form__inputForm__label} for="password">パスワード</label>
+                        <input class={styles.formTemplate__form__inputForm__input} onInput={(e) => setPassword(e.currentTarget.value)} name="password" id="password" type="password" />
                     </div>
-                    <button type="submit" class={styles.login__form__submit}>ログイン</button>
+                    <button type="submit" class={styles.formTemplate__form__submit}>ログイン</button>
                 </form>
             </div>
         </Center>
