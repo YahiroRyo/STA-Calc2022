@@ -17,11 +17,13 @@ const Calc = () => {
     const [error, setError] = createSignal<string>('');
     const [isNum, setIsNum] = createSignal<boolean>(false);
     const [canInputNum, setCanInputNum] = createSignal<boolean>(true);
+    const [sendedCalc, setSendedCalc] = createSignal<boolean>(true);
     
     const addResult = (value: string) => {
         if ((!isNumeric(value) && !isNum()) || value === '=') return;
         if (!isNumeric(value)) setCanInputNum(true);
         if (!canInputNum()) return;
+        setSendedCalc(false);
         setIsNum(isNumeric(value));
         setResult((result) => result + (isNum() ? value : ' ' + value + ' '));
     }
@@ -34,6 +36,7 @@ const Calc = () => {
                 await axios.post('http://localhost:8080/api/calc/histories', {
                     calc: result()
                 });
+                setSendedCalc(true);
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     switch (e.response!.status) {
@@ -58,6 +61,7 @@ const Calc = () => {
                     setIsNum={setIsNum}
                     setResult={setResult}
                     setCanInputNum={setCanInputNum}
+                    sendedCalc={sendedCalc}
                 />
                 <div class={styles.calc__calculator}>
                     <Show
@@ -68,7 +72,12 @@ const Calc = () => {
                     <Result><span>{result()}</span></Result>
                     <div class={styles.calc__calculator__keyboard}>
                         <div class={styles.calc__calculator__keyboard__options}>
-                            <Key onClick={() => setResult('')}><span class={styles.calc__calculator__keyboard__options__ac}>AC</span></Key>
+                            <Key onClick={() => {
+                                setResult('');
+                                setIsNum(false);
+                                setCanInputNum(true);
+                                setSendedCalc(true);
+                            }}><span class={styles.calc__calculator__keyboard__options__ac}>AC</span></Key>
                         </div>
                         <div class={styles.calc__calculator__keyboard__numbers}>
                             <Index each={[...Array(9)]}>{(num, index) => 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createSignal, For, onMount, Show } from 'solid-js';
+import { createResource, createSignal, For, onMount, Show } from 'solid-js';
 import { isLoggedIn, setIsLoggedIn } from '../../../App';
 import styles from '../Calc.module.scss';
 
@@ -7,21 +7,20 @@ type HistoryProps = {
     setResult: (result: string) => void,
     setCanInputNum: (canInputNum: boolean) => void,
     setIsNum: (isNum: boolean) => void,
+    sendedCalc: () => boolean,
 };
 
 type Calc = {
     calc: string
 };
 
-const History = ({setResult, setCanInputNum, setIsNum}: HistoryProps) => {
-    const [calcHistories, setCalcHistories] = createSignal<Calc[]>();
-
-    onMount(async() => {
+const History = ({setResult, setCanInputNum, setIsNum, sendedCalc}: HistoryProps) => {
+    const getCalcHistories = async() => {
         try {
             await axios.get('http://localhost:8080/sanctum/csrf-cookie');
-            const response = await axios.get('http://localhost:8080/api/calc/histories');
-            setCalcHistories(response.data);
+            const response = await axios.get<Calc[]>('http://localhost:8080/api/calc/histories');
             setIsLoggedIn(true);
+            return response.data;
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 switch (e.response!.status) {
@@ -34,7 +33,8 @@ const History = ({setResult, setCanInputNum, setIsNum}: HistoryProps) => {
                 }
             }
         }
-    });
+    }
+    const [calcHistories] = createResource(sendedCalc, getCalcHistories);
     
     const setResultCalcHistory = (e: MouseEvent & {
         currentTarget: HTMLLIElement;
