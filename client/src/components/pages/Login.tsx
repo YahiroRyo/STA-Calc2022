@@ -1,5 +1,7 @@
-import { createSignal, JSXElement } from "solid-js";
-import FetchError from "../../helpers/exceptions/FetchError";
+import axios from "axios";
+import { useNavigate } from "solid-app-router";
+import { createSignal, JSXElement, Show } from "solid-js";
+import { LoginValidationError } from "../../types/error/login/LoginValidationError";
 import Alert from "../common/Alert";
 import Center from "../common/Center";
 import styles from "./Login.module.scss"
@@ -12,21 +14,35 @@ type FormSubmitEvent = Event & {
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = createSignal<JSXElement | undefined>();
+    const [userName, setUserName] = createSignal<string>('');
+    const [password, setPassword] = createSignal<string>('');
+    const navigate = useNavigate();
 
     const login = async (e: FormSubmitEvent) => {
         e.preventDefault();
         try {
-            let response: Response;
-            response = await fetch('http://localhost:8080/sanctum/csrf-cookie');
-            if (!response.ok) throw new FetchError(response);
-            response = await fetch('http://localhost:8080/users/login', { method: 'POST'});
-            if (!response.ok) throw new FetchError(response);
+            await axios.get('http://localhost:8080/sanctum/csrf-cookie');
+            await axios.post('http://localhost:8080/users/login', {
+                user_name: userName(),
+                password: password(),
+            });
+            navigate('/');
         } catch (e) {
-            if (e instanceof FetchError) {
-                switch (e.status) {
-                    case 302:
+            if (axios.isAxiosError(e)) {
+                setErrorMessage();
+                switch (e.response!.status) {
                     case 401:
                         setErrorMessage('ログインに失敗しました');
+                        break;
+                    case 422:
+                        const data = e.response!.data as LoginValidationError;
+                        setErrorMessage(
+                            <span>
+                                <p>ログインに失敗しました</p>
+                                {data.errors.user_name ? <p>・{data.errors.user_name[0]}</p> : <></>}
+                                {data.errors.password ? <p>・{data.errors.password[0]}</p> : <></>}
+                            </span>
+                        );
                         break;
                     default:
                         setErrorMessage('不明なエラーが発生しました');
@@ -39,16 +55,18 @@ const Login = () => {
     return (
         <Center>
             <div class={styles.login}>
-                <Alert title="エラーが発生しました">{errorMessage()}</Alert>
                 <h1 class={styles.login__title}>Login / ログイン</h1>
+                <Show when={errorMessage()}>
+                    <Alert className={styles.login__alert} title="エラーが発生しました" message={errorMessage()} />
+                </Show>
                 <form onSubmit={login} class={styles.login__form}>
                     <div class={styles.login__form__inputForm}>
                         <label class={styles.login__form__inputForm__label} for="userName">ユーザー名</label>
-                        <input class={styles.login__form__inputForm__input} name="userName" id="userName" type="text" />
+                        <input class={styles.login__form__inputForm__input} onInput={(e) => setUserName(e.currentTarget.value)} name="userName" id="userName" type="text" />
                     </div>
                     <div class={styles.login__form__inputForm}>
                         <label class={styles.login__form__inputForm__label} for="password">パスワード</label>
-                        <input class={styles.login__form__inputForm__input} name="password" id="password" type="password" />
+                        <input class={styles.login__form__inputForm__input} onInput={(e) => setPassword(e.currentTarget.value)} name="password" id="password" type="password" />
                     </div>
                     <button type="submit" class={styles.login__form__submit}>ログイン</button>
                 </form>

@@ -3,15 +3,15 @@ import styles from './Alert.module.scss';
 
 type AlertProps = {
     title: string;
-    children: JSXElement
+    message: JSXElement;
+    className?: string;
 };
 
-const Alert = ({ title, children }: AlertProps) => {
-    if (!children) return;
+const Alert = ({ className, title, message }: AlertProps) => {
     return (
-        <div class={styles.alert}>
+        <div class={`${styles.alert} ${className}`}>
             <p class={styles.alert__title}>{title}</p>
-            <p class={styles.alert__text}>{children}</p>
+            <p class={styles.alert__text}>{message}</p>
         </div>
     )
 }
