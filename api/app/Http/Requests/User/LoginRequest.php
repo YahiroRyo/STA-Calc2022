@@ -6,6 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
+    public function attributes()
+    {
+        return [
+            'user_name' => 'ユーザー名',
+            'password' => 'パスワード'
+        ];
+    }
+
     public function authorize()
     {
         return true;

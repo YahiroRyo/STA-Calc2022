@@ -4,7 +4,6 @@ namespace App\Services\User;
 
 use App\Models\User\Domain\User as DomainUser;
 use App\Models\User\Eloquent\User as EloquentUser;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 

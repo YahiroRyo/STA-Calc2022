@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginRequest;
+use App\Models\User\Eloquent\User;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class LoginController extends Controller
