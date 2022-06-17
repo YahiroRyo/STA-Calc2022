@@ -1,29 +1,60 @@
 .calc {
-    width: 594px;
-    &__keyboard {
-        display: flex;
-        gap: 24px;
-        margin-top: 40px;
-        align-items: flex-start;
-        justify-content: center;
-        &__numbers {
-            align-items: center;
+    display: flex;
+    column-gap: 100px;
+    &__calculator {
+        width: 594px;
+        &__keyboard {
             display: flex;
-            flex-wrap: wrap;
             gap: 24px;
+            margin-top: 40px;
+            align-items: flex-start;
             justify-content: center;
-            width: 318px;
+            &__numbers {
+                align-items: center;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px;
+                justify-content: center;
+                width: 318px;
+            }
+            &__calc {
+                display: flex;
+                flex-wrap: wrap;
+                row-gap: 24px;
+                width: 90px;
+            }
+            &__options {
+                &__ac {
+                    color: #dc2626;
+                    font-weight: bold;
+                }
+            }
         }
-        &__calc {
-            display: flex;
-            flex-wrap: wrap;
-            row-gap: 24px;
-            width: 90px;
-        }
-        &__options {
-            &__ac {
-                color: #dc2626;
-                font-weight: bold;
+    }
+}
+.history {
+    color: #333;
+    width: 500px;
+    &__title {
+        font-size: 40px;
+    }
+    &__error {
+        margin-top: 16px;
+        font-size: 16px;
+    }
+    &__list {
+        list-style: none;
+        margin-top: 16px;
+        overflow-y: auto;
+        height: 50vh;
+        &__item {
+            border-radius: 8px;
+            font-size: 24px;
+            padding: 16px;
+            transition: .1s;
+            &:hover {
+                background-color: #dfdfdf;
+                cursor: pointer;
             }
         }
     }
@@ -64,4 +95,5 @@
     letter-spacing: 1.6px;
     padding: 0 33px;
     width: 100%;
+    margin-top: 16px;
 }
