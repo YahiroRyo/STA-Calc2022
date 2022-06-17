@@ -13,6 +13,7 @@ return new class extends Migration
 
             $table->string('user_name', 30);
             $table->string('password', 256);
+            $table->rememberToken();
             $table->timestamp('created_at')->useCurrent();
         });
     }

@@ -18,7 +18,7 @@ class UserCreateTest extends TestCaseAPI
     public function test_ユーザーの作成を行う(): void
     {
         $user = $this->domainUser->getUser();
-        $response = $this->post('/api/users', $user);
+        $response = $this->post('/users', $user);
         $response->assertOk();
         $this->assertNotNull(EloquentUser::where('user_name', $user['user_name'])->first());
     }

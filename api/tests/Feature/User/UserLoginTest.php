@@ -10,7 +10,7 @@ class UserLoginTest extends TestCaseAPI
     public function test_ユーザーログインを行う(): void
     {
         $user = User::first();
-        $response = $this->post('/api/users/login', [
+        $response = $this->post('/users/login', [
             'user_name' => $user->user_name,
             'password' => 'password',
         ]);
