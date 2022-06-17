@@ -7,6 +7,7 @@ import History from "./calc/History";
 import { isLoggedIn } from "../../App";
 import axios from "axios";
 import Alert from "../common/Alert";
+import env from "../../helpers/Env";
 
 const isNumeric = (val: string) => {
     return /^-?\d+$/.test(val);
@@ -32,8 +33,8 @@ const Calc = () => {
         if (!isNumeric(result().slice(result().length - 2, -1)) && !isNum()) return;
         if (isLoggedIn()) {
             try {
-                await axios.get('http://localhost:8080/sanctum/csrf-cookie');
-                await axios.post('http://localhost:8080/api/calc/histories', {
+                await axios.get(`${env.API_URL}/sanctum/csrf-cookie`);
+                await axios.post(`${env.API_URL}/api/calc/histories`, {
                     calc: result()
                 });
                 setSendedCalc(true);

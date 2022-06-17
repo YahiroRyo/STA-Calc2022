@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createResource, createSignal, For, onMount, Show } from 'solid-js';
 import { isLoggedIn, setIsLoggedIn } from '../../../App';
+import env from '../../../helpers/Env';
 import styles from '../Calc.module.scss';
 
 type HistoryProps = {
@@ -17,8 +18,8 @@ type Calc = {
 const History = ({setResult, setCanInputNum, setIsNum, sendedCalc}: HistoryProps) => {
     const getCalcHistories = async() => {
         try {
-            await axios.get('http://localhost:8080/sanctum/csrf-cookie');
-            const response = await axios.get<Calc[]>('http://localhost:8080/api/calc/histories');
+            await axios.get(`${env.API_URL}/sanctum/csrf-cookie`);
+            const response = await axios.get<Calc[]>(`${env.API_URL}/api/calc/histories`);
             setIsLoggedIn(true);
             return response.data;
         } catch (e) {
