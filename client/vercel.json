@@ -1,0 +1,5 @@
+{
+    "rewrites": [
+        { "source": "/v1/:match*", "destination": "https://api.calc.yappi.jp/:match*" }
+      ]
+}
