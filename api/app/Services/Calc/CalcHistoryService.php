@@ -18,7 +18,7 @@ class CalcHistoryService
         $calcHistories = EloquentCalcHistory::where('user_id', auth()->id())
                                             ->orderBy('created_at', 'desc')
                                             ->get();
-        if ($calcHistories->isEmpty()) throw new ModelNotFoundException();
+        // if ($calcHistories->isEmpty()) throw new ModelNotFoundException();
         return $calcHistories;
     }
 }
