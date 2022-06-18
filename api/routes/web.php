@@ -20,3 +20,6 @@ Route::prefix('/users')->group(function() {
     Route::post('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+Route::get('/test', function() {
+    return view('welcome');
+});
