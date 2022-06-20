@@ -34,7 +34,7 @@ const Calc = () => {
         if (isLoggedIn()) {
             try {
                 await axios.get(`${env.API_URL}/sanctum/csrf-cookie`);
-                await axios.post(`${env.API_URL}/api/api/calc/histories`, {
+                await axios.post(`${env.API_URL}/api/calc/histories`, {
                     calc: result()
                 });
                 setSendedCalc(true);
