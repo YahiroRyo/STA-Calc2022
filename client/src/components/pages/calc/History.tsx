@@ -19,7 +19,7 @@ const History = ({setResult, setCanInputNum, setIsNum, sendedCalc}: HistoryProps
     const getCalcHistories = async() => {
         try {
             await axios.get(`${env.API_URL}/sanctum/csrf-cookie`);
-            const response = await axios.get<Calc[]>(`${env.API_URL}/calc/histories`);
+            const response = await axios.get<Calc[]>(`${env.API_URL}/calc/api/histories`);
             setIsLoggedIn(true);
             return response.data;
         } catch (e) {

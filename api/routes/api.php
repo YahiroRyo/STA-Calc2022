@@ -15,13 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/test', function() {
-        return view('welcome');
-    });
     Route::prefix('/calc')->group(function() {
-        Route::get('/test', function() {
-            return view('welcome');
-        });
         Route::prefix('/histories')->group(function() {
             Route::get('/', [CalcHistoryController::class, 'findAll']);
             Route::post('/', [CalcHistoryController::class, 'calcHistoryCreate']);

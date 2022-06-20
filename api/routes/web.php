@@ -21,12 +21,3 @@ Route::prefix('/users')->group(function() {
     Route::post('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-Route::middleware('auth.loggedin')->prefix('/calc')->group(function() {
-    Route::get('/test', function() {
-        return view('welcome');
-    });
-    Route::prefix('/histories')->group(function() {
-        Route::get('/', [CalcHistoryController::class, 'findAll']);
-        Route::post('/', [CalcHistoryController::class, 'calcHistoryCreate']);
-    });
-});
