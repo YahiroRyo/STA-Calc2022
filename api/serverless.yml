@@ -1,5 +1,5 @@
 useDotenv: true
-service: mailbox-api
+service: calc-api
 
 provider:
   name: aws
