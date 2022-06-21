@@ -48,6 +48,8 @@ functions:
       DB_PASSWORD: ${self:custom.secret.DB_PASSWORD}
       MYSQL_ATTR_SSL_CA: ${self:custom.secret.MYSQL_ATTR_SSL_CA}
       APP_KEY: ${self:custom.appkey.APP_KEY}
+      SANCTUM_STATEFUL_DOMAINS: calc.yappi.jp
+      SESSION_DOMAIN: .yappi.jp
       LOG_CHANNEL: stderr
       VIEW_COMPILED_PATH: /tmp/storage/framework/views
 
