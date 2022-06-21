@@ -1,1 +1,1 @@
-export const API_URL = 'https://api.calc.yappi.jp/api';
+export const API_URL = 'https://calc-api.yappi.jp';
