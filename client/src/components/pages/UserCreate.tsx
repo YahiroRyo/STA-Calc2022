@@ -5,6 +5,7 @@ import env from "../../helpers/Env";
 import { UserCreateValidationError } from "../../types/error/users/UserCreateValidationError";
 import Alert from "../common/Alert";
 import Center from "../common/Center";
+import Load from "../common/Load";
 import styles from "./FormTemplate.module.scss"
 
 type FormSubmitEvent = Event & {
@@ -15,12 +16,14 @@ type FormSubmitEvent = Event & {
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = createSignal<JSXElement | undefined>();
+    const [isLoading, setIsLoading] = createSignal<boolean>(false);
     const [userName, setUserName] = createSignal<string>('');
     const [password, setPassword] = createSignal<string>('');
     const navigate = useNavigate();
 
     const create = async (e: FormSubmitEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             await axios.get(`${env.API_URL}/sanctum/csrf-cookie`);
             await axios.post(`${env.API_URL}/users/create`, {
@@ -47,26 +50,29 @@ const Login = () => {
                 }
             }
         }
+        setIsLoading(false);
     }
 
     return (
         <Center>
             <div class={styles.formTemplate}>
-                <h1 class={styles.formTemplate__title}>Create / アカウント作成</h1>
-                <Show when={errorMessage()}>
-                    <Alert className={styles.formTemplate__alert} title="アカウントの作成に失敗しました" message={errorMessage()} />
+                <Show when={!isLoading()} fallback={<Load />}>
+                    <h1 class={styles.formTemplate__title}>Create / アカウント作成</h1>
+                    <Show when={errorMessage()}>
+                        <Alert className={styles.formTemplate__alert} title="アカウントの作成に失敗しました" message={errorMessage()} />
+                    </Show>
+                    <form onSubmit={create} class={styles.formTemplate__form}>
+                        <div class={styles.formTemplate__form__inputForm}>
+                            <label class={styles.formTemplate__form__inputForm__label} for="userName">ユーザー名</label>
+                            <input class={styles.formTemplate__form__inputForm__input} onInput={(e) => setUserName(e.currentTarget.value)} name="userName" id="userName" type="text" />
+                        </div>
+                        <div class={styles.formTemplate__form__inputForm}>
+                            <label class={styles.formTemplate__form__inputForm__label} for="password">パスワード</label>
+                            <input class={styles.formTemplate__form__inputForm__input} onInput={(e) => setPassword(e.currentTarget.value)} name="password" id="password" type="password" />
+                        </div>
+                        <button type="submit" class={styles.formTemplate__form__submit}>作成</button>
+                    </form>
                 </Show>
-                <form onSubmit={create} class={styles.formTemplate__form}>
-                    <div class={styles.formTemplate__form__inputForm}>
-                        <label class={styles.formTemplate__form__inputForm__label} for="userName">ユーザー名</label>
-                        <input class={styles.formTemplate__form__inputForm__input} onInput={(e) => setUserName(e.currentTarget.value)} name="userName" id="userName" type="text" />
-                    </div>
-                    <div class={styles.formTemplate__form__inputForm}>
-                        <label class={styles.formTemplate__form__inputForm__label} for="password">パスワード</label>
-                        <input class={styles.formTemplate__form__inputForm__input} onInput={(e) => setPassword(e.currentTarget.value)} name="password" id="password" type="password" />
-                    </div>
-                    <button type="submit" class={styles.formTemplate__form__submit}>作成</button>
-                </form>
             </div>
         </Center>
     )
